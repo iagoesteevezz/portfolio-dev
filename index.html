@@ -24,16 +24,32 @@
         <!-- Top nav: © brand left — Work / About / Contact right -->
         <div class="hero__nav">
           <span class="hero__brand">© Code by Iago</span>
-          <nav class="hero__links">
+          <nav class="hero__links" aria-label="Primary navigation">
             <a href="#work">Work</a>
             <a href="#about">About</a>
             <a href="/contact">Contact</a>
+            <!-- Sliding indicator dot — animated by GSAP on hover -->
+            <div class="nav-dot" aria-hidden="true"></div>
           </nav>
         </div>
 
-        <!-- Role label — left side, mid-height -->
-        <div class="hero__role">
-          <p class="hero__role-text">Software<br />Developer</p>
+        <!-- Location badge — left side, mid-height -->
+        <div class="hero__location">
+          <span class="hero__location-text">Located<br>in Spain</span>
+          <svg class="hero__location-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+
+        <!-- Occupation — right side, mid-height -->
+        <div class="hero__occupation">
+          <svg class="hero__occupation-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="4" y1="4" x2="19" y2="19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M11 19 L19 19 L19 11" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <p class="hero__occupation-text">Software<br>Developer</p>
         </div>
 
         <!-- Marquee — full width, bottom-anchored via flex-end on parent -->
@@ -163,6 +179,39 @@
       </section>
 
     </main>
+
+    <!-- Floating menu button — appears after hero leaves viewport -->
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+      <!-- Inner wrapper moves independently for magnetic parallax depth -->
+      <span class="menu-btn__inner">
+        <span class="menu-btn__line"></span>
+        <span class="menu-btn__line"></span>
+      </span>
+    </button>
+
+    <!-- Sidebar overlay — closes panel on click -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar navigation panel -->
+    <aside class="sidebar" id="sidebar" aria-hidden="true" aria-label="Navigation menu">
+      <header class="sidebar__head">
+        <span class="sidebar__nav-label">Navigation</span>
+        <hr class="sidebar__rule" aria-hidden="true">
+      </header>
+      <nav class="sidebar__nav" aria-label="Site navigation">
+        <a href="#" class="sidebar__link">Home</a>
+        <a href="#work" class="sidebar__link">Work</a>
+        <a href="#about" class="sidebar__link">About</a>
+        <a href="/contact" class="sidebar__link">Contact</a>
+      </nav>
+      <footer class="sidebar__foot">
+        <span class="sidebar__socials-label">Socials</span>
+        <div class="sidebar__socials">
+          <a href="https://github.com/iagoesteevezz" class="sidebar__social-link" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/iagoestevez" class="sidebar__social-link" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </footer>
+    </aside>
 
     <!-- Footer is mounted via JS (src/components/footer.js)
          so it can be shared across pages and excluded on /contact -->
