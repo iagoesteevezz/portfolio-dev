@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iago Estévez — Software Developer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+
+    <main>
+
+      <!-- ─── HERO ──────────────────────────────────────── -->
+      <section class="hero">
+
+        <!-- Top nav: © brand left — Work / About / Contact right -->
+        <div class="hero__nav">
+          <span class="hero__brand">© Code by Iago</span>
+          <nav class="hero__links">
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="/contact">Contact</a>
+          </nav>
+        </div>
+
+        <!-- Role label — left side, mid-height -->
+        <div class="hero__role">
+          <p class="hero__role-text">Software<br />Developer</p>
+        </div>
+
+        <!-- Marquee — full width, bottom-anchored via flex-end on parent -->
+        <div class="hero__marquee" aria-hidden="true">
+          <div class="marquee__track">
+            <span class="marquee__item">Iago Estévez&ensp;—&ensp;</span>
+            <span class="marquee__item">Iago Estévez&ensp;—&ensp;</span>
+            <span class="marquee__item">Iago Estévez&ensp;—&ensp;</span>
+            <span class="marquee__item">Iago Estévez&ensp;—&ensp;</span>
+            <!-- Identical clone — enables seamless loop -->
+            <span class="marquee__item">Iago Estévez&ensp;—&ensp;</span>
+            <span class="marquee__item">Iago Estévez&ensp;—&ensp;</span>
+            <span class="marquee__item">Iago Estévez&ensp;—&ensp;</span>
+            <span class="marquee__item">Iago Estévez&ensp;—&ensp;</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ─── INTRO ──────────────────────────────────────── -->
+      <section class="intro">
+        <p class="intro__text">
+          A passionate Software Developer dedicated to building robust and
+          scalable applications. Specializing in backend development with a
+          focus on cloud technologies. Fluent in English, Spanish, and German.
+        </p>
+      </section>
+
+      <!-- ─── RECENT WORK ───────────────────────────────── -->
+      <section class="projects" id="work">
+
+        <div class="projects__header">
+          <span class="section-label">Recent Work</span>
+          <span class="section-count">(03)</span>
+        </div>
+
+        <ul class="projects__list">
+
+          <!-- 01 · moneyTrac -->
+          <li class="project-item">
+            <div class="project-item__top">
+              <span class="project-num">01</span>
+              <h2 class="project-name">moneyTrac</h2>
+              <a href="#" class="project-link" aria-label="View moneyTrac project">↗</a>
+            </div>
+            <div class="project-img-wrap">
+              <img
+                src="/assets/estanteria.jpg"
+                alt="moneyTrac — personal finance tracking dashboard"
+                class="project-img--main"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-item__bottom">
+              <p class="project-desc">
+                Personal finance tracking app built with Spring Boot and AWS.
+              </p>
+              <ul class="project-tags">
+                <li>Backend</li>
+                <li>Cloud</li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- 02 · fuelTracker -->
+          <li class="project-item">
+            <div class="project-item__top">
+              <span class="project-num">02</span>
+              <h2 class="project-name">fuelTracker</h2>
+              <a href="#" class="project-link" aria-label="View fuelTracker project">↗</a>
+            </div>
+            <div class="project-img-wrap">
+              <img
+                src="/assets/caja-disquete.png"
+                alt="fuelTracker — automotive maintenance and fuel efficiency app"
+                class="project-img--main"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-item__bottom">
+              <p class="project-desc">
+                An automotive maintenance and fuel efficiency application.
+              </p>
+              <ul class="project-tags">
+                <li>Frontend</li>
+                <li>APIs</li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- 03 · arrow-game -->
+          <li class="project-item">
+            <div class="project-item__top">
+              <span class="project-num">03</span>
+              <h2 class="project-name">arrow-game</h2>
+              <a href="#" class="project-link" aria-label="View arrow-game project">↗</a>
+            </div>
+            <div class="project-img-wrap">
+              <img
+                src="/assets/arrow-game.png"
+                alt="arrow-game — 2D game built with Python and Pygame"
+                class="project-img--main"
+                loading="lazy"
+              />
+            </div>
+            <div class="project-item__bottom">
+              <p class="project-desc">
+                A 2D game developed using Python and Pygame.
+              </p>
+              <ul class="project-tags">
+                <li>Python</li>
+                <li>2D</li>
+              </ul>
+            </div>
+          </li>
+
+        </ul>
+
+        <!-- View All Works CTA -->
+        <div class="view-all-wrap">
+          <a href="/works" class="btn-view-all">
+            View All Works
+            <span class="btn-arrow">↗</span>
+          </a>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer is mounted via JS (src/components/footer.js)
+         so it can be shared across pages and excluded on /contact -->
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
