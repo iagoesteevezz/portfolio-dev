@@ -23,11 +23,17 @@
 
         <!-- Top nav: © brand left — Work / About / Contact right -->
         <div class="hero__nav">
-          <span class="hero__brand">© Code by Iago</span>
+          <div class="hero__brand">
+            <span class="hero__brand-symbol">©</span>
+            <div class="hero__brand-text-wrap">
+              <span class="hero__brand-text hero__brand-text--a">Code by Iago</span>
+              <span class="hero__brand-text hero__brand-text--b">Iago Estévez</span>
+            </div>
+          </div>
           <nav class="hero__links" aria-label="Primary navigation">
-            <a href="#work">Work</a>
-            <a href="#about">About</a>
-            <a href="/contact">Contact</a>
+            <a href="works.html">Work</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
             <!-- Sliding indicator dot — animated by GSAP on hover -->
             <div class="nav-dot" aria-hidden="true"></div>
           </nav>
@@ -71,11 +77,16 @@
 
       <!-- ─── INTRO ──────────────────────────────────────── -->
       <section class="intro">
-        <p class="intro__text">
-          A passionate Software Developer dedicated to building robust and
-          scalable applications. Specializing in backend development with a
-          focus on cloud technologies. Fluent in English, Spanish, and German.
-        </p>
+        <div class="intro__grid">
+          <p class="intro__text">
+            A passionate Software Developer dedicated to building robust and
+            scalable applications. Specializing in backend development with a
+            focus on cloud technologies. Fluent in English, Spanish, and German.
+          </p>
+          <button type="button" class="intro__about-btn" id="aboutBtn" aria-label="About me">
+            <span class="intro__about-btn-text">About<br>me</span>
+          </button>
+        </div>
       </section>
 
       <!-- ─── RECENT WORK ───────────────────────────────── -->
@@ -86,91 +97,49 @@
           <span class="section-count">(03)</span>
         </div>
 
-        <ul class="projects__list">
+        <!-- Text-only rows — image reveals on hover via .cursor-img-follower -->
+        <div class="projects__list">
 
-          <!-- 01 · moneyTrac -->
-          <li class="project-item">
-            <div class="project-item__top">
-              <span class="project-num">01</span>
-              <h2 class="project-name">moneyTrac</h2>
-              <a href="#" class="project-link" aria-label="View moneyTrac project">↗</a>
+          <a class="project-row" href="/works.html"
+             data-image="/assets/moneytracker.png">
+            <div class="project-row__left">
+              <span class="project-row__num">01</span>
+              <h2 class="project-row__title">moneyTrack</h2>
             </div>
-            <div class="project-img-wrap">
-              <img
-                src="/assets/estanteria.jpg"
-                alt="moneyTrac — personal finance tracking dashboard"
-                class="project-img--main"
-                loading="lazy"
-              />
+            <div class="project-row__right">
+              <span class="project-row__role">Backend · Cloud</span>
+              <span class="project-row__stack">Java · Spring Boot · AWS</span>
             </div>
-            <div class="project-item__bottom">
-              <p class="project-desc">
-                Personal finance tracking app built with Spring Boot and AWS.
-              </p>
-              <ul class="project-tags">
-                <li>Backend</li>
-                <li>Cloud</li>
-              </ul>
-            </div>
-          </li>
+          </a>
 
-          <!-- 02 · fuelTracker -->
-          <li class="project-item">
-            <div class="project-item__top">
-              <span class="project-num">02</span>
-              <h2 class="project-name">fuelTracker</h2>
-              <a href="#" class="project-link" aria-label="View fuelTracker project">↗</a>
+          <a class="project-row" href="/works.html"
+             data-image="/assets/fueltracker.png">
+            <div class="project-row__left">
+              <span class="project-row__num">02</span>
+              <h2 class="project-row__title">fuelTracker</h2>
             </div>
-            <div class="project-img-wrap">
-              <img
-                src="/assets/caja-disquete.png"
-                alt="fuelTracker — automotive maintenance and fuel efficiency app"
-                class="project-img--main"
-                loading="lazy"
-              />
+            <div class="project-row__right">
+              <span class="project-row__role">Frontend · APIs</span>
+              <span class="project-row__stack">React · REST API</span>
             </div>
-            <div class="project-item__bottom">
-              <p class="project-desc">
-                An automotive maintenance and fuel efficiency application.
-              </p>
-              <ul class="project-tags">
-                <li>Frontend</li>
-                <li>APIs</li>
-              </ul>
-            </div>
-          </li>
+          </a>
 
-          <!-- 03 · arrow-game -->
-          <li class="project-item">
-            <div class="project-item__top">
-              <span class="project-num">03</span>
-              <h2 class="project-name">arrow-game</h2>
-              <a href="#" class="project-link" aria-label="View arrow-game project">↗</a>
+          <a class="project-row" href="/works.html"
+             data-image="/assets/arrow-game.png">
+            <div class="project-row__left">
+              <span class="project-row__num">03</span>
+              <h2 class="project-row__title">arrow-game</h2>
             </div>
-            <div class="project-img-wrap">
-              <img
-                src="/assets/arrow-game.png"
-                alt="arrow-game — 2D game built with Python and Pygame"
-                class="project-img--main"
-                loading="lazy"
-              />
+            <div class="project-row__right">
+              <span class="project-row__role">Python · 2D</span>
+              <span class="project-row__stack">Pygame · OOP</span>
             </div>
-            <div class="project-item__bottom">
-              <p class="project-desc">
-                A 2D game developed using Python and Pygame.
-              </p>
-              <ul class="project-tags">
-                <li>Python</li>
-                <li>2D</li>
-              </ul>
-            </div>
-          </li>
+          </a>
 
-        </ul>
+        </div>
 
-        <!-- View All Works CTA -->
         <div class="view-all-wrap">
-          <a href="/works" class="btn-view-all">
+          <a href="/works.html" class="btn-view-all">
             View All Works
             <span class="btn-arrow">↗</span>
           </a>
@@ -179,6 +148,18 @@
       </section>
 
     </main>
+
+    <!-- Cursor portfolio — pre-loaded strip slides on project-row hover -->
+    <div class="cursor-portfolio" id="cursorPortfolio" aria-hidden="true">
+      <div class="cursor-img-mask">
+        <div class="cursor-img-strip" id="cursorImgStrip">
+          <img src="/assets/moneytracker.png" alt="" class="cursor-portfolio__img">
+          <img src="/assets/fueltracker.png"  alt="" class="cursor-portfolio__img">
+          <img src="/assets/arrow-game.png"   alt="" class="cursor-portfolio__img">
+        </div>
+      </div>
+      <div class="cursor-btn">View</div>
+    </div>
 
     <!-- Floating menu button — appears after hero leaves viewport -->
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
@@ -200,9 +181,9 @@
       </header>
       <nav class="sidebar__nav" aria-label="Site navigation">
         <a href="#" class="sidebar__link">Home</a>
-        <a href="#work" class="sidebar__link">Work</a>
-        <a href="#about" class="sidebar__link">About</a>
-        <a href="/contact" class="sidebar__link">Contact</a>
+        <a href="works.html" class="sidebar__link">Work</a>
+        <a href="about.html" class="sidebar__link">About</a>
+        <a href="contact.html" class="sidebar__link">Contact</a>
       </nav>
       <footer class="sidebar__foot">
         <span class="sidebar__socials-label">Socials</span>

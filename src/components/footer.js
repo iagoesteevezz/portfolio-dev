@@ -1,48 +1,64 @@
-/*
-  Shared footer component.
-  Import and call mountFooter() on every page except /contact.
-  Example: import { mountFooter } from './components/footer.js';
-*/
 export function mountFooter() {
   const footer = document.createElement('footer');
   footer.className = 'site-footer';
 
   footer.innerHTML = `
+    <div class="footer-curve" aria-hidden="true">
+      <svg viewBox="0 0 100 300" preserveAspectRatio="none">
+        <path class="footer-curve__path" fill="#0a0a0a"
+              d="M 0 0 Q 50 300 100 0 L 100 0 L 0 0 Z"/>
+      </svg>
+    </div>
+
     <div class="footer__inner">
 
-      <div class="footer__cta">
-        <p>Ready to work together?</p>
-        <p>Get in touch.</p>
-      </div>
-
-      <div class="footer__contacts">
-        <a href="mailto:iagoesteevezz@gmail.com" class="footer__email">iagoesteevezz@gmail.com</a>
-        <a href="tel:+34660552864" class="footer__phone">+34 660 552 864</a>
-      </div>
-
-      <div class="footer__social">
-        <a href="https://github.com/iagoesteevezz" class="footer__social-link" aria-label="GitHub"
-           target="_blank" rel="noopener noreferrer">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+      <div class="footer__main">
+        <div class="footer__cta-block">
+          <h2 class="footer__cta-text">
+            <div class="footer__title-row">
+              <img src="/assets/iago-cara.png" class="footer__avatar" alt="Iago">
+              <span>Let's work</span>
+            </div>
+            <div>together</div>
+          </h2>
+          <div class="footer__pills">
+            <a href="mailto:iagoesteevezz@gmail.com" class="footer__pill">
+              <span>iagoesteevezz@gmail.com</span>
+            </a>
+            <a href="tel:+34660552864" class="footer__pill">
+              <span>+34 660 552 864</span>
+            </a>
+          </div>
+        </div>
+        <div class="footer__cta-right">
+          <svg class="footer__arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                  d="M17 7L7 17M7 17H17M7 17V7"/>
           </svg>
-        </a>
-        <a href="https://linkedin.com/in/iagoestevez" class="footer__social-link" aria-label="LinkedIn"
-           target="_blank" rel="noopener noreferrer">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-            <rect x="2" y="9" width="4" height="12"/>
-            <circle cx="4" cy="4" r="2"/>
-          </svg>
-        </a>
+          <a href="contact.html" class="footer__contact-btn" aria-label="Get in touch">
+            <span class="footer__contact-btn-text">Get in<br>touch</span>
+          </a>
+        </div>
       </div>
 
       <div class="footer__bottom">
-        <span class="footer__copy">© 2025 Iago Estévez</span>
+        <div class="footer__bottom-left">
+          <div class="footer__bottom-item">
+            <span class="footer__bottom-label">VERSION</span>
+            <span class="footer__bottom-value">2026 © Edition</span>
+          </div>
+          <div class="footer__bottom-item">
+            <span class="footer__bottom-label">LOCAL TIME</span>
+            <span class="footer__bottom-value" id="local-time">--:--</span>
+          </div>
+        </div>
+        <div class="footer__bottom-item">
+          <span class="footer__bottom-label">SOCIALS</span>
+          <div class="footer__social-links">
+            <a href="https://linkedin.com/in/iagoestevez" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/iagoesteevezz" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
       </div>
 
     </div>
