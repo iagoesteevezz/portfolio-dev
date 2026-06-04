@@ -12,8 +12,8 @@
       rel="stylesheet"
     />
 
-    <script type="module" crossorigin src="/portfolio-dev/assets/main-DdxPhlLr.js"></script>
-    <link rel="stylesheet" crossorigin href="/portfolio-dev/assets/main-BbZTqDpl.css">
+    <script type="module" crossorigin src="/portfolio-dev/assets/main-DiUCsPkz.js"></script>
+    <link rel="stylesheet" crossorigin href="/portfolio-dev/assets/main-BEbad71Z.css">
   </head>
   <body>
 
@@ -24,13 +24,14 @@
 
         <!-- Top nav: © brand left — Work / About / Contact right -->
         <div class="hero__nav">
-          <div class="hero__brand">
-            <span class="hero__brand-symbol">©</span>
-            <div class="hero__brand-text-wrap">
-              <span class="hero__brand-text hero__brand-text--a">Code by Iago</span>
-              <span class="hero__brand-text hero__brand-text--b">Iago Estévez</span>
+          <a href="index.html" class="nav__logo">
+            <span class="logo__prefix">©</span>
+            <div class="logo__text-container">
+              <span class="logo__text logo__text--code">Code by&nbsp;</span>
+              <span class="logo__text logo__text--name">Iago</span>
+              <span class="logo__text logo__text--surname">&nbsp;Estévez</span>
             </div>
-          </div>
+          </a>
           <nav class="hero__links" aria-label="Primary navigation">
             <a href="works.html">Work</a>
             <a href="about.html">About</a>
@@ -40,14 +41,16 @@
           </nav>
         </div>
 
-        <!-- Location badge — left side, mid-height -->
-        <div class="hero__location">
-          <span class="hero__location-text">Located<br>in Spain</span>
-          <svg class="hero__location-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="2" y1="12" x2="22" y2="12"/>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
+        <!-- Location badge — always visible pill -->
+        <div class="nav__location">
+          <span class="location__text">Located<br>in Spain</span>
+          <div class="location__icon-container">
+            <svg class="location__globe" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
         </div>
 
         <!-- Occupation — right side, mid-height -->
@@ -102,9 +105,9 @@
         <div class="projects__list">
 
           <a class="project-row" href="/works.html"
-             data-image="/assets/moneytracker.png">
+             data-image="../public/assets/moneytracker.png"
+             data-color="#1a2535">
             <div class="project-row__left">
-              <span class="project-row__num">01</span>
               <h2 class="project-row__title">moneyTrack</h2>
             </div>
             <div class="project-row__right">
@@ -114,9 +117,9 @@
           </a>
 
           <a class="project-row" href="/works.html"
-             data-image="/assets/fueltracker.png">
+             data-image="../public/assets/fueltracker.png"
+             data-color="#1e2d1e">
             <div class="project-row__left">
-              <span class="project-row__num">02</span>
               <h2 class="project-row__title">fuelTracker</h2>
             </div>
             <div class="project-row__right">
@@ -126,9 +129,9 @@
           </a>
 
           <a class="project-row" href="/works.html"
-             data-image="/assets/arrow-game.png">
+             data-image="../public/assets/arrow-game.png"
+             data-color="#2a1a2a">
             <div class="project-row__left">
-              <span class="project-row__num">03</span>
               <h2 class="project-row__title">arrow-game</h2>
             </div>
             <div class="project-row__right">
@@ -150,17 +153,24 @@
 
     </main>
 
-    <!-- Cursor portfolio — pre-loaded strip slides on project-row hover -->
+    <!-- Cursor portfolio — image card + independent "View" circle -->
     <div class="cursor-portfolio" id="cursorPortfolio" aria-hidden="true">
       <div class="cursor-img-mask">
         <div class="cursor-img-strip" id="cursorImgStrip">
-          <img src="./assets/moneytracker.png" alt="" class="cursor-portfolio__img">
-          <img src="./assets/fueltracker.png"  alt="" class="cursor-portfolio__img">
-          <img src="./assets/arrow-game.png"   alt="" class="cursor-portfolio__img">
+          <div class="cursor-img-frame">
+            <img src="./assets/moneytracker.png" alt="" class="cursor-portfolio__img">
+          </div>
+          <div class="cursor-img-frame">
+            <img src="./assets/fueltracker.png" alt="" class="cursor-portfolio__img">
+          </div>
+          <div class="cursor-img-frame">
+            <img src="./assets/arrow-game.png" alt="" class="cursor-portfolio__img">
+          </div>
         </div>
       </div>
-      <div class="cursor-btn">View</div>
     </div>
+    <!-- "View" circle tracks cursor faster than the card (parallax lag effect) -->
+    <div class="cursor-btn" id="cursorBtn" aria-hidden="true">View</div>
 
     <!-- Floating menu button — appears after hero leaves viewport -->
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
