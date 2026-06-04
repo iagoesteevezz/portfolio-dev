@@ -16,7 +16,7 @@ export function mountFooter() {
         <div class="footer__cta-block">
           <h2 class="footer__cta-text">
             <div class="footer__title-row">
-              <img src="/assets/iago-cara.png" class="footer__avatar" alt="Iago">
+              <img src="${import.meta.env.BASE_URL}assets/iago-cara.png" class="footer__avatar" alt="Iago">
               <span>Let's work</span>
             </div>
             <div>together</div>
