@@ -366,7 +366,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: clamp(1.5rem, 3vh, 2.5rem) 0;
+  padding: clamp(3rem, 5.5vh, 5rem) 0;
   border-bottom: 1px solid var(--border);
   max-width: 1500px;
   margin: 0 auto;
@@ -377,7 +377,6 @@ img {
 .project-row:hover .project-row__right { transform: translateX(30px); }
 
 .project-row:hover .project-row__title,
-.project-row:hover .project-row__num,
 .project-row:hover .project-row__role,
 .project-row:hover .project-row__stack {
   color: #888888;
@@ -388,16 +387,6 @@ img {
   align-items: baseline;
   gap: clamp(1rem, 2vw, 2rem);
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
-}
-
-.project-row__num {
-  font-family: var(--font-body);
-  font-size: clamp(0.65rem, 0.85vw, 0.78rem);
-  font-weight: 400;
-  color: var(--fg-muted);
-  letter-spacing: 0.06em;
-  flex-shrink: 0;
-  transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .project-row__title {
@@ -445,6 +434,7 @@ img {
   The strip stacks all 3 images vertically; yPercent: -100*index slides
   the strip up to reveal the correct image without any src swap.
 */
+/* Image card — 320×320 square, slowest tracker (0.8s lag) */
 .cursor-portfolio {
   position: fixed;
   top: 0;
@@ -453,24 +443,20 @@ img {
   z-index: 150;
   opacity: 0;
   will-change: transform;
+  width: 320px;
+  height: 320px;
 }
 
-/* Clipping window — shows exactly one image at a time */
+/* Clipping window — fills the square card */
 .cursor-img-mask {
-  width: 350px;
-  aspect-ratio: 4 / 3;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   border-radius: 4px;
   position: relative;
   pointer-events: none !important;
 }
 
-/*
-  Strip height = mask height (via height:100%).
-  Images overflow the strip height but the mask clips them.
-  yPercent uses the strip's own CSS height for %-math, so
-  yPercent: -100 shifts exactly one image slot upward.
-*/
 .cursor-img-strip {
   display: flex;
   flex-direction: column;
@@ -478,37 +464,49 @@ img {
   pointer-events: none !important;
 }
 
+/* Colored background frame — fills one slot of the square mask */
+.cursor-img-frame {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #1e1e1e;
+  pointer-events: none !important;
+}
+
 .cursor-portfolio__img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  flex-shrink: 0;
+  height: 100%;
   object-fit: cover;
   display: block;
   pointer-events: none !important;
 }
 
-/* "View" badge — absolutely centered over the mask */
+/* "View ↗" — separate fixed element, faster tracker (0.5s lag) */
 .cursor-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  background: rgba(242, 237, 228, 0.88);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none !important;
+  z-index: 151;
+  opacity: 0;
+  will-change: transform;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100vmax;
+  background: #3B82F6;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-body);
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--bg);
-  pointer-events: none !important;
+  color: #ffffff;
 }
 
 /* ─── View All Works ─────────────────────────────────── */

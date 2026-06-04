@@ -104,9 +104,9 @@
         <div class="projects__list">
 
           <a class="project-row" href="/works.html"
-             data-image="../public/assets/moneytracker.png">
+             data-image="../public/assets/moneytracker.png"
+             data-color="#1a2535">
             <div class="project-row__left">
-              <span class="project-row__num">01</span>
               <h2 class="project-row__title">moneyTrack</h2>
             </div>
             <div class="project-row__right">
@@ -116,9 +116,9 @@
           </a>
 
           <a class="project-row" href="/works.html"
-             data-image="../public/assets/fueltracker.png">
+             data-image="../public/assets/fueltracker.png"
+             data-color="#1e2d1e">
             <div class="project-row__left">
-              <span class="project-row__num">02</span>
               <h2 class="project-row__title">fuelTracker</h2>
             </div>
             <div class="project-row__right">
@@ -128,9 +128,9 @@
           </a>
 
           <a class="project-row" href="/works.html"
-             data-image="../public/assets/arrow-game.png">
+             data-image="../public/assets/arrow-game.png"
+             data-color="#2a1a2a">
             <div class="project-row__left">
-              <span class="project-row__num">03</span>
               <h2 class="project-row__title">arrow-game</h2>
             </div>
             <div class="project-row__right">
@@ -152,17 +152,24 @@
 
     </main>
 
-    <!-- Cursor portfolio — pre-loaded strip slides on project-row hover -->
+    <!-- Cursor portfolio — image card + independent "View" circle -->
     <div class="cursor-portfolio" id="cursorPortfolio" aria-hidden="true">
       <div class="cursor-img-mask">
         <div class="cursor-img-strip" id="cursorImgStrip">
-          <img src="./assets/moneytracker.png" alt="" class="cursor-portfolio__img">
-          <img src="./assets/fueltracker.png"  alt="" class="cursor-portfolio__img">
-          <img src="./assets/arrow-game.png"   alt="" class="cursor-portfolio__img">
+          <div class="cursor-img-frame">
+            <img src="./assets/moneytracker.png" alt="" class="cursor-portfolio__img">
+          </div>
+          <div class="cursor-img-frame">
+            <img src="./assets/fueltracker.png" alt="" class="cursor-portfolio__img">
+          </div>
+          <div class="cursor-img-frame">
+            <img src="./assets/arrow-game.png" alt="" class="cursor-portfolio__img">
+          </div>
         </div>
       </div>
-      <div class="cursor-btn">View</div>
     </div>
+    <!-- "View" circle tracks cursor faster than the card (parallax lag effect) -->
+    <div class="cursor-btn" id="cursorBtn" aria-hidden="true">View</div>
 
     <!-- Floating menu button — appears after hero leaves viewport -->
     <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">

@@ -366,26 +366,47 @@ if (document.querySelector('.hero')) {
   const cursorImgStrip = document.querySelector('.cursor-img-strip');
   const projectRows = document.querySelectorAll('.project-row');
 
+  const cursorBtn = document.getElementById('cursorBtn');
+
   if (cursorPortfolio && cursorImgStrip && projectRows.length) {
 
-    gsap.set(cursorPortfolio, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
+    const cursorFrames = cursorPortfolio.querySelectorAll('.cursor-img-frame');
 
-    const xTo = gsap.quickTo(cursorPortfolio, 'x', { duration: 0.3, ease: 'power3' });
-    const yTo = gsap.quickTo(cursorPortfolio, 'y', { duration: 0.3, ease: 'power3' });
+    /* Initial state — both invisible, centered on their tracking point */
+    gsap.set(cursorPortfolio, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
+    if (cursorBtn) gsap.set(cursorBtn, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
+
+    /* Image card — slowest (0.8s), premium lag feel from the clon */
+    const xToModal = gsap.quickTo(cursorPortfolio, 'x', { duration: 0.8, ease: 'power3' });
+    const yToModal = gsap.quickTo(cursorPortfolio, 'y', { duration: 0.8, ease: 'power3' });
+
+    /* "View" circle — faster (0.5s), visually leads the card */
+    const xToBtn = cursorBtn ? gsap.quickTo(cursorBtn, 'x', { duration: 0.5, ease: 'power3' }) : null;
+    const yToBtn = cursorBtn ? gsap.quickTo(cursorBtn, 'y', { duration: 0.5, ease: 'power3' }) : null;
 
     window.addEventListener('mousemove', (e) => {
-      xTo(e.clientX);
-      yTo(e.clientY);
+      xToModal(e.clientX);
+      yToModal(e.clientY);
+      if (xToBtn) { xToBtn(e.clientX); yToBtn(e.clientY); }
     });
 
     projectRows.forEach((row, index) => {
       row.addEventListener('mouseenter', () => {
+        const color = row.dataset.color || '#1e1e1e';
+        if (cursorFrames[index]) {
+          gsap.to(cursorFrames[index], { backgroundColor: color, duration: 0.3, ease: 'power3.out', overwrite: 'auto' });
+        }
+        /* Strip slide — 0.5s cubic-bezier(0.76,0,0.24,1) from clon = power3.out in GSAP */
         gsap.to(cursorImgStrip, { yPercent: -100 * index, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+        /* Enter: scale 0→1, ease [0.76,0,0.24,1] from clon variants */
         gsap.to(cursorPortfolio, { scale: 1, opacity: 1, duration: 0.4, ease: 'power3.out', overwrite: 'auto' });
+        if (cursorBtn) gsap.to(cursorBtn, { scale: 1, opacity: 1, duration: 0.4, ease: 'power3.out', overwrite: 'auto' });
       });
 
       row.addEventListener('mouseleave', () => {
-        gsap.to(cursorPortfolio, { scale: 0, opacity: 0, duration: 0.3, ease: 'power3.out', overwrite: 'auto' });
+        /* Exit: ease [0.32,0,0.67,0] from clon = power2.in in GSAP */
+        gsap.to(cursorPortfolio, { scale: 0, opacity: 0, duration: 0.4, ease: 'power2.in', overwrite: 'auto' });
+        if (cursorBtn) gsap.to(cursorBtn, { scale: 0, opacity: 0, duration: 0.4, ease: 'power2.in', overwrite: 'auto' });
       });
     });
   }
