@@ -4,32 +4,28 @@ export function mountFooter() {
 
   footer.innerHTML = `
     <div class="footer-curve" aria-hidden="true">
-      <svg viewBox="0 0 100 300" preserveAspectRatio="none">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
         <path class="footer-curve__path" fill="#0a0a0a"
-              d="M 0 0 Q 50 300 100 0 L 100 0 L 0 0 Z"/>
+              d="M 0 0 Q 50 100 100 0 L 100 0 L 0 0 Z"/>
       </svg>
     </div>
 
     <div class="footer__inner">
 
-      <div class="footer__main">
-        <div class="footer__cta-block">
-          <h2 class="footer__cta-text">
-            <div class="footer__title-row">
-              <img src="${import.meta.env.BASE_URL}assets/iago-cara.png" class="footer__avatar" alt="Iago">
-              <span>Let's work</span>
-            </div>
-            <div>together</div>
-          </h2>
-          <div class="footer__pills">
-            <a href="mailto:iagoesteevezz@gmail.com" class="footer__pill">
-              <span>iagoesteevezz@gmail.com</span>
-            </a>
-            <a href="tel:+34660552864" class="footer__pill">
-              <span>+34 660 552 864</span>
-            </a>
+      <!-- Title block -->
+      <div class="footer__headline">
+        <h2 class="footer__cta-text">
+          <div class="footer__title-row">
+            <img src="${import.meta.env.BASE_URL}assets/iago-cara.png" class="footer__avatar" alt="Iago">
+            <span>Let's work</span>
           </div>
-        </div>
+          <div>together</div>
+        </h2>
+      </div>
+
+      <!-- Mid: full-width divider with circle centered on it -->
+      <div class="footer__mid">
+        <div class="footer__divider"></div>
         <div class="footer__cta-right">
           <svg class="footer__arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -41,6 +37,17 @@ export function mountFooter() {
         </div>
       </div>
 
+      <!-- Contact pills — below the divider line -->
+      <div class="footer__pills">
+        <a href="mailto:iagoesteevezz@gmail.com" class="footer__pill">
+          <span>iagoesteevezz@gmail.com</span>
+        </a>
+        <a href="tel:+34660552864" class="footer__pill">
+          <span>+34 660 552 864</span>
+        </a>
+      </div>
+
+      <!-- Bottom row -->
       <div class="footer__bottom">
         <div class="footer__bottom-left">
           <div class="footer__bottom-item">

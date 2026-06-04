@@ -23,53 +23,53 @@ gsap.ticker.lagSmoothing(0);
 window.addEventListener('load', () => { ScrollTrigger.refresh(); });
 
 /* ─── Floating menu button — vars (global) ───────────── */
-const menuBtn  = document.getElementById('menuBtn');
+const menuBtn = document.getElementById('menuBtn');
 const btnInner = menuBtn.querySelector('.menu-btn__inner');
 let isBtnVisible = false;
-let magnetActive  = false;
+let magnetActive = false;
 
 const MAGNET_R = 90;
-const OUT_STR  = 0.28;
-const IN_STR   = 0.14;
+const OUT_STR = 0.28;
+const IN_STR = 0.14;
 
 gsap.set(menuBtn, { autoAlpha: 0, scale: 0 });
 
 /* ─── Magnetic effect — menu button (global) ─────────── */
 function getBtnCenter() {
   const rect = menuBtn.getBoundingClientRect();
-  const gx   = gsap.getProperty(menuBtn, 'x') || 0;
-  const gy   = gsap.getProperty(menuBtn, 'y') || 0;
+  const gx = gsap.getProperty(menuBtn, 'x') || 0;
+  const gy = gsap.getProperty(menuBtn, 'y') || 0;
   return { x: rect.left + rect.width / 2 - gx, y: rect.top + rect.height / 2 - gy };
 }
 
 document.addEventListener('mousemove', (e) => {
   if (!isBtnVisible) return;
-  const c    = getBtnCenter();
-  const dx   = e.clientX - c.x;
-  const dy   = e.clientY - c.y;
+  const c = getBtnCenter();
+  const dx = e.clientX - c.x;
+  const dy = e.clientY - c.y;
   const dist = Math.hypot(dx, dy);
 
   if (dist < MAGNET_R) {
     magnetActive = true;
-    gsap.to(menuBtn,  { x: dx * OUT_STR, y: dy * OUT_STR, duration: 0.5,  ease: 'power2.out', overwrite: 'auto' });
-    gsap.to(btnInner, { x: dx * IN_STR,  y: dy * IN_STR,  duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(menuBtn, { x: dx * OUT_STR, y: dy * OUT_STR, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(btnInner, { x: dx * IN_STR, y: dy * IN_STR, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
   } else if (magnetActive) {
     magnetActive = false;
-    gsap.to(menuBtn,  { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
+    gsap.to(menuBtn, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
     gsap.to(btnInner, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
   }
 });
 
 /* ─── Sidebar panel (global) ─────────────────────────── */
-gsap.set('#sidebar',        { xPercent: 100 });
-gsap.set('#sidebarOverlay', { autoAlpha: 0  });
+gsap.set('#sidebar', { xPercent: 100 });
+gsap.set('#sidebarOverlay', { autoAlpha: 0 });
 
 const sidebarTl = gsap.timeline({ paused: true })
-  .to('#sidebar',        { xPercent: 0, duration: 0.65, ease: 'power4.inOut' })
+  .to('#sidebar', { xPercent: 0, duration: 0.65, ease: 'power4.inOut' })
   .to('#sidebarOverlay', { autoAlpha: 1, duration: 0.45, ease: 'power2.out' }, 0)
-  .to(menuBtn,           { backgroundColor: '#3B82F6', duration: 0.25, ease: 'power2.inOut' }, 0)
-  .to('.menu-btn__line:first-child', { y:  4, rotate:  45, duration: 0.25, ease: 'power2.inOut' }, 0)
-  .to('.menu-btn__line:last-child',  { y: -4, rotate: -45, duration: 0.25, ease: 'power2.inOut' }, 0)
+  .to(menuBtn, { backgroundColor: '#3B82F6', duration: 0.25, ease: 'power2.inOut' }, 0)
+  .to('.menu-btn__line:first-child', { y: 4, rotate: 45, duration: 0.25, ease: 'power2.inOut' }, 0)
+  .to('.menu-btn__line:last-child', { y: -4, rotate: -45, duration: 0.25, ease: 'power2.inOut' }, 0)
   .fromTo('.sidebar__link',
     { opacity: 0, y: 24 },
     { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out' },
@@ -101,22 +101,42 @@ document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar
 document.querySelectorAll('.sidebar__link').forEach((l) => l.addEventListener('click', closeSidebar));
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isSidebarOpen) closeSidebar(); });
 
+/* ─── Logo hover — "Code by " out left, "Estévez" in right ── */
+document.querySelectorAll('.nav__logo').forEach((logo) => {
+  const codeEl = logo.querySelector('.logo__text--code');
+  const surnameEl = logo.querySelector('.logo__text--surname');
+  if (!codeEl || !surnameEl) return;
+
+  /* Capture natural width before any tween modifies it */
+  const codeW = codeEl.offsetWidth;
+
+  /* Surname starts invisible, shifted right */
+  gsap.set(surnameEl, { x: 20, opacity: 0 });
+
+  logo.addEventListener('mouseenter', () => {
+    gsap.to(codeEl, { width: 0, opacity: 0, duration: 0.42, ease: 'power3.inOut', overwrite: 'auto' });
+    gsap.to(surnameEl, { x: 0, opacity: 1, duration: 0.42, ease: 'power3.inOut', delay: 0.04, overwrite: 'auto' });
+  });
+
+  logo.addEventListener('mouseleave', () => {
+    gsap.to(codeEl, { width: codeW, opacity: 1, duration: 0.42, ease: 'power3.inOut', overwrite: 'auto' });
+    gsap.to(surnameEl, { x: 20, opacity: 0, duration: 0.3, ease: 'power2.in', overwrite: 'auto' });
+  });
+});
+
 /* ─── Footer — curve + clock + reveals + magnetic ────── */
 
-/* SVG arch flattens as footer scrolls into view (scrub) */
-const curvePath = document.querySelector('.footer-curve__path');
-if (curvePath) {
-  ScrollTrigger.create({
+/* Black U retracts to flat line — finishes early so curve is gone before title is read */
+gsap.to('.footer-curve__path', {
+  attr: { d: 'M 0 0 Q 50 0 100 0 L 100 0 L 0 0 Z' },
+  ease: 'none',
+  scrollTrigger: {
     trigger: '.site-footer',
     start: 'top bottom',
-    end: 'top center',
-    scrub: 1.5,
-    onUpdate(self) {
-      const cy = gsap.utils.interpolate(300, 0, self.progress);
-      curvePath.setAttribute('d', `M 0 0 Q 50 ${cy} 100 0 L 100 0 L 0 0 Z`);
-    },
-  });
-}
+    end: 'bottom 75%',
+    scrub: true,
+  },
+});
 
 /* Real-time clock — Canary Islands timezone */
 function updateLocalTime() {
@@ -137,9 +157,9 @@ ScrollTrigger.create({
   trigger: '.site-footer',
   start: 'top 85%',
   onEnter: () => {
-    gsap.from('.footer__cta-block',   { opacity: 0, y: 50,    duration: 1.1, ease: 'power3.out' });
+    gsap.from('.footer__headline', { opacity: 0, y: 50, duration: 1.1, ease: 'power3.out' });
     gsap.from('.footer__contact-btn', { opacity: 0, scale: 0, duration: 0.7, ease: 'back.out(1.7)', delay: 0.25 });
-    gsap.from('.footer__bottom',      { opacity: 0, y: 20,    duration: 0.7, ease: 'power3.out', delay: 0.4 });
+    gsap.from(['.footer__pills', '.footer__bottom'], { opacity: 0, y: 20, duration: 0.7, ease: 'power3.out', delay: 0.4 });
   },
   once: true,
 });
@@ -148,17 +168,17 @@ ScrollTrigger.create({
 const footerContactBtn = document.querySelector('.footer__contact-btn');
 if (footerContactBtn) {
   let footerBtnMagnet = false;
-  const FOOTER_R   = 120;
+  const FOOTER_R = 120;
   const FOOTER_STR = 0.28;
 
   document.addEventListener('mousemove', (e) => {
     const rect = footerContactBtn.getBoundingClientRect();
-    const gx   = gsap.getProperty(footerContactBtn, 'x') || 0;
-    const gy   = gsap.getProperty(footerContactBtn, 'y') || 0;
-    const cx   = rect.left + rect.width  / 2 - gx;
-    const cy2  = rect.top  + rect.height / 2 - gy;
-    const dx   = e.clientX - cx;
-    const dy   = e.clientY - cy2;
+    const gx = gsap.getProperty(footerContactBtn, 'x') || 0;
+    const gy = gsap.getProperty(footerContactBtn, 'y') || 0;
+    const cx = rect.left + rect.width / 2 - gx;
+    const cy2 = rect.top + rect.height / 2 - gy;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy2;
     const dist = Math.hypot(dx, dy);
 
     if (dist < FOOTER_R) {
@@ -178,7 +198,7 @@ if (document.querySelector('.hero')) {
 
   /* ── Hero entrance ── */
   gsap.fromTo(
-    ['.hero__occupation-text', '.hero__location'],
+    ['.hero__occupation-text', '.nav__location'],
     { opacity: 0, y: 16 },
     { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 0.4, stagger: 0.1 }
   );
@@ -242,9 +262,9 @@ if (document.querySelector('.hero')) {
 
   /* ── Nav active-indicator dot ── */
   const heroLinksEl = document.querySelector('.hero__links');
-  const navLinks    = heroLinksEl.querySelectorAll('a');
-  const navDot      = heroLinksEl.querySelector('.nav-dot');
-  let   navDotVis   = false;
+  const navLinks = heroLinksEl.querySelectorAll('a');
+  const navDot = heroLinksEl.querySelector('.nav-dot');
+  let navDotVis = false;
 
   gsap.set(navDot, { opacity: 0 });
 
@@ -258,7 +278,7 @@ if (document.querySelector('.hero')) {
       } else {
         navDotVis = true;
         gsap.set(navDot, { x: tx });
-        gsap.to(navDot,  { opacity: 1, duration: 0.35, ease: 'power2.out' });
+        gsap.to(navDot, { opacity: 1, duration: 0.35, ease: 'power2.out' });
       }
     });
   });
@@ -269,33 +289,40 @@ if (document.querySelector('.hero')) {
   });
 
   /* ── Brand logo — hover animation + magnetic ── */
-  const brandEl     = document.querySelector('.hero__brand');
-  const brandSymbol = brandEl.querySelector('.hero__brand-symbol');
-  const brandTextA  = brandEl.querySelector('.hero__brand-text--a');
-  const brandTextB  = brandEl.querySelector('.hero__brand-text--b');
+  const brandEl = document.querySelector('.nav__logo'); // <-- ¡Actualizado!
+  const codeText = document.querySelector('.logo__text--code');
+  const surnameText = document.querySelector('.logo__text--surname');
 
-  brandEl.addEventListener('mouseenter', () => {
-    gsap.to(brandSymbol,              { rotation: 360, duration: 0.65, ease: 'power2.inOut', overwrite: true });
-    gsap.to([brandTextA, brandTextB], { yPercent: -100, duration: 0.4, ease: 'power3.out',  overwrite: true });
-  });
+  // Solo ejecutamos esto si el logo existe en la página
+  if (brandEl) {
+    brandEl.addEventListener('mouseenter', () => {
+      // Si hiciste la animación con CSS, puedes borrar estos gsap.to
+      if (codeText && surnameText) {
+        gsap.to(codeText, { width: 0, opacity: 0, duration: 0.4, ease: 'power2.out', overwrite: true });
+        gsap.to(surnameText, { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out', overwrite: true });
+      }
+    });
 
-  brandEl.addEventListener('mouseleave', () => {
-    gsap.set(brandSymbol, { rotation: 0 });
-    gsap.to([brandTextA, brandTextB], { yPercent: 0, duration: 0.45, ease: 'power3.out', overwrite: true });
-  });
+    brandEl.addEventListener('mouseleave', () => {
+      if (codeText && surnameText) {
+        gsap.to(codeText, { width: 'auto', opacity: 1, duration: 0.4, ease: 'power2.out', overwrite: true });
+        gsap.to(surnameText, { x: 20, opacity: 0, duration: 0.4, ease: 'power2.out', overwrite: true });
+      }
+    });
+  }
 
-  let   brandMagnetActive = false;
-  const BRAND_R   = 80;
+  let brandMagnetActive = false;
+  const BRAND_R = 80;
   const BRAND_STR = 0.15;
 
   document.addEventListener('mousemove', (e) => {
     const rect = brandEl.getBoundingClientRect();
-    const gx   = gsap.getProperty(brandEl, 'x') || 0;
-    const gy   = gsap.getProperty(brandEl, 'y') || 0;
-    const cx   = rect.left + rect.width  / 2 - gx;
-    const cy   = rect.top  + rect.height / 2 - gy;
-    const dx   = e.clientX - cx;
-    const dy   = e.clientY - cy;
+    const gx = gsap.getProperty(brandEl, 'x') || 0;
+    const gy = gsap.getProperty(brandEl, 'y') || 0;
+    const cx = rect.left + rect.width / 2 - gx;
+    const cy = rect.top + rect.height / 2 - gy;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
     const dist = Math.hypot(dx, dy);
 
     if (dist < BRAND_R) {
@@ -310,18 +337,18 @@ if (document.querySelector('.hero')) {
   /* ── About me button — magnetic (same math, single element) ── */
   const aboutBtn = document.getElementById('aboutBtn');
   if (aboutBtn) {
-    let   aboutMagnetActive = false;
-    const ABOUT_R   = 110;
+    let aboutMagnetActive = false;
+    const ABOUT_R = 110;
     const ABOUT_STR = 0.28;
 
     document.addEventListener('mousemove', (e) => {
       const rect = aboutBtn.getBoundingClientRect();
-      const gx   = gsap.getProperty(aboutBtn, 'x') || 0;
-      const gy   = gsap.getProperty(aboutBtn, 'y') || 0;
-      const cx   = rect.left + rect.width  / 2 - gx;
-      const cy   = rect.top  + rect.height / 2 - gy;
-      const dx   = e.clientX - cx;
-      const dy   = e.clientY - cy;
+      const gx = gsap.getProperty(aboutBtn, 'x') || 0;
+      const gy = gsap.getProperty(aboutBtn, 'y') || 0;
+      const cx = rect.left + rect.width / 2 - gx;
+      const cy = rect.top + rect.height / 2 - gy;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
       const dist = Math.hypot(dx, dy);
 
       if (dist < ABOUT_R) {
@@ -336,8 +363,8 @@ if (document.querySelector('.hero')) {
 
   /* ── Cursor portfolio — strip-slider image reveal ── */
   const cursorPortfolio = document.querySelector('.cursor-portfolio');
-  const cursorImgStrip  = document.querySelector('.cursor-img-strip');
-  const projectRows     = document.querySelectorAll('.project-row');
+  const cursorImgStrip = document.querySelector('.cursor-img-strip');
+  const projectRows = document.querySelectorAll('.project-row');
 
   if (cursorPortfolio && cursorImgStrip && projectRows.length) {
 
@@ -353,8 +380,8 @@ if (document.querySelector('.hero')) {
 
     projectRows.forEach((row, index) => {
       row.addEventListener('mouseenter', () => {
-        gsap.to(cursorImgStrip,  { yPercent: -100 * index, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
-        gsap.to(cursorPortfolio, { scale: 1, opacity: 1,   duration: 0.4, ease: 'power3.out', overwrite: 'auto' });
+        gsap.to(cursorImgStrip, { yPercent: -100 * index, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
+        gsap.to(cursorPortfolio, { scale: 1, opacity: 1, duration: 0.4, ease: 'power3.out', overwrite: 'auto' });
       });
 
       row.addEventListener('mouseleave', () => {
@@ -373,7 +400,7 @@ if (document.querySelector('.hero')) {
     },
     onLeaveBack: () => {
       isBtnVisible = false;
-      magnetActive  = false;
+      magnetActive = false;
       gsap.to(menuBtn, { autoAlpha: 0, scale: 0, duration: 0.3, ease: 'power2.in' });
       gsap.set([menuBtn, btnInner], { x: 0, y: 0 });
     },
@@ -395,10 +422,10 @@ if (document.querySelector('.works-page')) {
   });
 
   gsap.utils.toArray('.work-item').forEach((item) => {
-    const head  = item.querySelector('.work-item__head');
-    const name  = item.querySelector('.work-name');
+    const head = item.querySelector('.work-item__head');
+    const name = item.querySelector('.work-name');
     const stack = item.querySelector('.work-stack');
-    const img   = item.querySelector('.work-img-wrap');
+    const img = item.querySelector('.work-img-wrap');
 
     gsap.from([head, name, stack, img].filter(Boolean), {
       opacity: 0, y: 60, duration: 1.1, ease: 'power3.out', stagger: 0.1,

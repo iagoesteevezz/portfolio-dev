@@ -33,6 +33,12 @@ body {
   overflow-x: hidden;
 }
 
+main {
+  position: relative;
+  z-index: 2;
+  background: var(--bg);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -75,37 +81,45 @@ img {
   z-index: 2;
 }
 
-.hero__brand {
+/* ─── Logo (shared — hero + page-nav) ─────────────────── */
+.nav__logo {
   display: inline-flex;
   align-items: center;
   gap: 0.4ch;
-  cursor: default;
+  text-decoration: none;
   font-family: var(--font-body);
   font-size: clamp(0.9rem, 1.3vw, 1.15rem);
   font-weight: 400;
   letter-spacing: 0.01em;
-  color: #ffffff;
+  color: var(--fg);
+  cursor: pointer;
+  white-space: nowrap;
 }
 
-.hero__brand-symbol {
+.logo__prefix {
   display: inline-block;
   flex-shrink: 0;
-  will-change: transform; /* GSAP rotation target */
 }
 
-/* Clip window — shows exactly one line at a time */
-.hero__brand-text-wrap {
+.logo__text-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo__text {
   display: inline-block;
-  overflow: hidden;
-  height: 1em;
+  white-space: nowrap;
   line-height: 1;
-  vertical-align: middle;
 }
 
-.hero__brand-text {
-  display: block;
-  line-height: 1;
-  white-space: nowrap;
+/* Collapses horizontally via GSAP width animation */
+.logo__text--code {
+  overflow: hidden;
+}
+
+/* GSAP handles initial opacity/x via gsap.set — no CSS initial state needed */
+.logo__text--surname {
+  will-change: transform, opacity;
 }
 
 .hero__links {
@@ -139,11 +153,9 @@ img {
   opacity: 0.5;
 }
 
-/* White nav text on the hero background */
-.hero .hero__brand,
-.hero .hero__links a {
-  color: #ffffff;
-}
+/* Logo color overrides per context */
+.hero .nav__logo { color: #ffffff; }
+.page-nav .nav__logo { color: var(--fg); }
 
 /* ─── Marquee ────────────────────────────────────────── */
 .hero__marquee {
@@ -170,35 +182,52 @@ img {
   color: #ffffff;
 }
 
-/* ─── Location badge — left side, mid-height ─────────── */
-.hero__location {
+/* ─── Location badge — flush left, rounded right only ── */
+.nav__location {
   position: absolute;
-  left: 2vw;
+  left: 0;
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
+  cursor: default;
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  background: rgba(12, 12, 12, 0.88);
-  border-radius: 50px;
-  padding: 0.75rem 1.1rem 0.75rem 1.4rem;
+  gap: 1.5rem;
+  background: #111111;
+  border-radius: 0 999px 999px 0;
+  padding: 1.2rem 0.8rem 1.2rem 2rem;
 }
 
-.hero__location-text {
+.location__text {
   font-family: var(--font-body);
-  font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
   font-weight: 400;
-  line-height: 1.3;
+  line-height: 1.35;
   color: #ffffff;
 }
 
-.hero__location-icon {
-  width: 1.8rem;
-  height: 1.8rem;
-  color: #ffffff;
+.location__icon-container {
+  width: clamp(52px, 5.5vw, 68px);
+  height: clamp(52px, 5.5vw, 68px);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  transform: rotate(15deg);
+}
+
+.location__globe {
+  width: clamp(26px, 2.8vw, 34px);
+  height: clamp(26px, 2.8vw, 34px);
+  color: #ffffff;
+  animation: spinGlobe 15s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes spinGlobe {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 /* ─── Occupation — far right, mid-height ────────────── */
@@ -310,6 +339,7 @@ img {
 /* ─── Projects section ───────────────────────────────── */
 .projects {
   padding: 0 5vw 12vh;
+  padding-bottom: calc(12vh + 120px);
 }
 
 .projects__header {
@@ -524,21 +554,21 @@ img {
 
 /* ─── Footer ─────────────────────────────────────────── */
 .site-footer {
-  --footer-bg: #141414;
+  --footer-bg: #1b1c1f;
   background: var(--footer-bg);
   position: relative;
+  overflow: visible;
 }
 
-/* SVG curve — top of footer, pulls up into work section */
+/* SVG curve — black U sits at top of footer, retracts to flat line on scroll */
 .footer-curve {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  top: -1px;
+  left: 0;
   width: 100%;
-  height: clamp(150px, 20vw, 300px);
-  margin-top: -80px;
-  line-height: 0;
-  overflow: hidden;
+  height: 120px;
   pointer-events: none;
+  z-index: 10;
 }
 
 .footer-curve svg {
@@ -555,24 +585,12 @@ img {
   width: 90vw;
   max-width: 1600px;
   margin: 0 auto;
-  padding: clamp(2rem, 5vh, 5rem) 0 clamp(2.5rem, 5vh, 5rem);
+  padding: clamp(140px, 16vh, 200px) 0 clamp(2.5rem, 5vh, 5rem);
 }
 
-/* ── Main CTA block ── */
-.footer__main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: clamp(2.5rem, 4vh, 4rem);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
-}
-
-/* Left block: title + pills stacked */
-.footer__cta-block {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(4rem, 8vh, 8rem);
+/* ── Title block ── */
+.footer__headline {
+  margin-bottom: clamp(3rem, 5vh, 5rem);
 }
 
 /* Title: "Let's work" row with inline avatar, then "together" below */
@@ -608,17 +626,38 @@ img {
   object-position: top center;
 }
 
-/* Right side: button + arrow wrapper */
-.footer__cta-right {
+/* ── Mid: full-width divider with circle centered on it ── */
+.footer__mid {
   position: relative;
-  flex-shrink: 0;
-  margin-right: 4vw;
+  /* height = circle diameter so divider lands exactly at vertical center */
+  height: clamp(8rem, 13vw, 16rem);
+  margin-bottom: 0.75rem;
 }
 
+.footer__divider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(242, 237, 228, 0.15);
+}
+
+/* Circle + arrow container — right-aligned, fills full mid height */
+.footer__cta-right {
+  position: absolute;
+  right: 4vw;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Arrow points at top-left corner of the circle */
 .footer__arrow {
   position: absolute;
-  top: -2rem;
-  left: -3rem;
+  top: -0.5rem;
+  left: -1rem;
   width: 2rem;
   height: 2rem;
   color: var(--fg);
@@ -673,18 +712,19 @@ img {
   color: #ffffff;
 }
 
-/* ── Contact pills — sit below title, left-aligned ── */
+/* ── Contact pills — below divider line, larger ── */
 .footer__pills {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
+  margin-bottom: clamp(3rem, 5vh, 5rem);
 }
 
 .footer__pill {
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 0.7rem 1.5rem;
+  padding: 1.2rem 2.5rem;
   border: 1px solid var(--border);
   border-radius: 50px;
   overflow: hidden;
@@ -715,7 +755,7 @@ img {
   position: relative;
   z-index: 1;
   font-family: var(--font-body);
-  font-size: clamp(0.72rem, 0.95vw, 0.88rem);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
   font-weight: 400;
   letter-spacing: 0.02em;
   color: #ffffff;
@@ -728,7 +768,6 @@ img {
   justify-content: space-between;
   align-items: flex-end;
   padding-top: clamp(1.5rem, 2.5vh, 2rem);
-  border-top: 1px solid var(--border);
 }
 
 /* Left side: VERSION + LOCAL TIME side by side */
@@ -963,18 +1002,7 @@ img {
   border-bottom: 1px solid var(--border);
 }
 
-.page-nav__brand {
-  font-family: var(--font-body);
-  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  color: var(--fg);
-  transition: opacity 0.2s ease;
-}
-
-.page-nav__brand:hover {
-  opacity: 0.55;
-}
+/* .page-nav__brand replaced by .nav__logo — styles live there */
 
 .page-nav__links {
   display: flex;

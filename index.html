@@ -23,13 +23,14 @@
 
         <!-- Top nav: © brand left — Work / About / Contact right -->
         <div class="hero__nav">
-          <div class="hero__brand">
-            <span class="hero__brand-symbol">©</span>
-            <div class="hero__brand-text-wrap">
-              <span class="hero__brand-text hero__brand-text--a">Code by Iago</span>
-              <span class="hero__brand-text hero__brand-text--b">Iago Estévez</span>
+          <a href="index.html" class="nav__logo">
+            <span class="logo__prefix">©</span>
+            <div class="logo__text-container">
+              <span class="logo__text logo__text--code">Code by&nbsp;</span>
+              <span class="logo__text logo__text--name">Iago</span>
+              <span class="logo__text logo__text--surname">&nbsp;Estévez</span>
             </div>
-          </div>
+          </a>
           <nav class="hero__links" aria-label="Primary navigation">
             <a href="works.html">Work</a>
             <a href="about.html">About</a>
@@ -39,14 +40,16 @@
           </nav>
         </div>
 
-        <!-- Location badge — left side, mid-height -->
-        <div class="hero__location">
-          <span class="hero__location-text">Located<br>in Spain</span>
-          <svg class="hero__location-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="2" y1="12" x2="22" y2="12"/>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-          </svg>
+        <!-- Location badge — always visible pill -->
+        <div class="nav__location">
+          <span class="location__text">Located<br>in Spain</span>
+          <div class="location__icon-container">
+            <svg class="location__globe" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
         </div>
 
         <!-- Occupation — right side, mid-height -->
@@ -101,7 +104,7 @@
         <div class="projects__list">
 
           <a class="project-row" href="/works.html"
-             data-image="/assets/moneytracker.png">
+             data-image="../public/assets/moneytracker.png">
             <div class="project-row__left">
               <span class="project-row__num">01</span>
               <h2 class="project-row__title">moneyTrack</h2>
@@ -113,7 +116,7 @@
           </a>
 
           <a class="project-row" href="/works.html"
-             data-image="/assets/fueltracker.png">
+             data-image="../public/assets/fueltracker.png">
             <div class="project-row__left">
               <span class="project-row__num">02</span>
               <h2 class="project-row__title">fuelTracker</h2>
@@ -125,7 +128,7 @@
           </a>
 
           <a class="project-row" href="/works.html"
-             data-image="/assets/arrow-game.png">
+             data-image="../public/assets/arrow-game.png">
             <div class="project-row__left">
               <span class="project-row__num">03</span>
               <h2 class="project-row__title">arrow-game</h2>
