@@ -1,0 +1,88 @@
+/* Loaded after Dennis' remote stylesheets: swaps his photos for Iago's.
+   url() paths are relative to this file, which Vite serves from the site base. */
+
+.profile-picture {
+   background-image: url("assets/iago-entero.png");
+   background-size: 180%;
+   background-position: 48% 4%;
+}
+
+/* Matches the flat backdrop of iago-entero.png so the photo edges disappear */
+:root {
+   --iago-photo-bg: #878c92;
+}
+
+.home-header,
+.home-header .personal-image {
+   background-color: var(--iago-photo-bg);
+}
+
+/* .personal-image starts ~11.5vh above the viewport (parallax); Dennis' photo
+   has headroom baked in, Iago's has little, so push it down. */
+.home-header .personal-image img {
+   top: 18vh;
+   object-position: top center;
+   /* The photo backdrop has a slight gradient: fade the edges into the flat bg */
+   -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+      linear-gradient(to bottom, transparent, #000 3.5%);
+   -webkit-mask-composite: source-in;
+   mask-image:
+      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+      linear-gradient(to bottom, transparent, #000 3.5%);
+   mask-composite: intersect;
+}
+
+.single-about-image .overlay:nth-child(1) {
+   background-color: var(--iago-photo-bg);
+   background-image: url("assets/iago-entero.png");
+   background-position: center 12vh;
+}
+
+/* aws-jam-2026.jpg is 840x768: frame matches it (plus parallax slack) so the whole team shows */
+.about-awwwards .single-image::before {
+   padding-top: 88%;
+}
+
+.about-awwwards .single-image .overlay:nth-child(1) {
+   background-image: url("assets/aws-jam-2026.jpg");
+   background-position: center center;
+   left: 0;
+   width: 100%;
+}
+
+@media screen and (max-width: 720px) {
+   .about-awwwards .single-image::before {
+      padding-top: 88%;
+   }
+
+   .about-awwwards .single-image .overlay:nth-child(1) {
+      background-image: url("assets/aws-jam-2026.jpg");
+      background-position: center center;
+      left: 0;
+      width: 100%;
+   }
+}
+
+/* Logo hover offsets are tuned to the width of "Iago" / "Estévez" */
+.btn-link.btn-left-top .snellenberg {
+   transform: translateX(2.05em);
+}
+
+@media screen and (min-width: 541px) {
+   .btn-link.btn-left-top:hover .dennis {
+      padding-right: .45em;
+   }
+}
+
+.btn-link .icon-download {
+   width: .8em;
+   height: .8em;
+   margin-left: .35em;
+   vertical-align: -.05em;
+}
+
+/* The badge reads "Awwwards Jury": not a credential Iago holds */
+.about-awwwards .awwwards-badge {
+   display: none;
+}
