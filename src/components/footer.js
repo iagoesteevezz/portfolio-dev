@@ -32,7 +32,7 @@ export function mountFooter() {
             <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                   d="M17 7L7 17M7 17H17M7 17V7"/>
           </svg>
-          <a href="contact.html" class="footer__contact-btn" aria-label="Get in touch">
+          <a href="/contact" class="footer__contact-btn" aria-label="Get in touch">
             <span class="footer__contact-btn-text">Get in<br>touch</span>
           </a>
         </div>

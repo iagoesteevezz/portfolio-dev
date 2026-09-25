@@ -33,8 +33,10 @@ def sub(text, pattern, repl, label, regex=False, flags=0):
 
 def common(t, page):
     t = sub(t, r'<script src="portfolio-config\.js"></script>\s*<script src="portfolio-theme\.js"></script>',
-            '<link href="/iago.css" rel="stylesheet" />\n  <script src="/iago.js"></script>',
+            '<link href="/iago.css" rel="stylesheet" />\n  <script src="/iago.js"></script>\n' + FAVICON_LINKS,
             f"{page}: config scripts", regex=True)
+
+    t = rewrite_urls(t, page)
 
     # Socials: Awwwards -> GitHub, drop Instagram + Twitter, LinkedIn -> Iago
     t = sub(t, r'\s*<li class="btn btn-link btn-link-external">\s*<a href="https://www\.instagram\.com/codebydennis/"[\s\S]*?</li>',
@@ -147,7 +149,7 @@ WEB3FORMS_KEY = "38744957-bd94-44fc-9acc-dd6ad2a28779"
 
 RESUME_LI = '''
                         <li class="btn btn-link btn-link-external">
-                            <a href="assets/cv-iago-estevez.pdf" download="Iago-Estevez-CV.pdf" data-barba-prevent
+                            <a href="/assets/cv-iago-estevez.pdf" download="Iago-Estevez-CV.pdf" data-barba-prevent
                                 class="btn-click magnetic" data-strength="20" data-strength-text="10">
                                 <span class="btn-text">
                                     <span class="btn-text-inner">Resume<svg class="icon-download" viewBox="0 0 16 16"
@@ -170,11 +172,51 @@ def work(t):
 
 PAGES = {"index": index, "about": about, "contact": contact, "work": work}
 
+FAVICON_LINKS = (
+    '  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />\n'
+    '  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />\n'
+    '  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />'
+)
+
+URL_MAP = (
+    ('href="index.html"', 'href="/"'),
+    ('href="work.html"', 'href="/work"'),
+    ('href="about.html"', 'href="/about"'),
+    ('href="contact.html"', 'href="/contact"'),
+    ('href="assets/cv-iago-estevez.pdf"', 'href="/assets/cv-iago-estevez.pdf"'),
+    ('<link rel="canonical" href="about.html" />',
+     '<link rel="canonical" href="https://iagoestevez.com/about" />'),
+    ('<link rel="canonical" href="work.html" />',
+     '<link rel="canonical" href="https://iagoestevez.com/work" />'),
+    ('<link rel="canonical" href="contact.html" />',
+     '<link rel="canonical" href="https://iagoestevez.com/contact" />'),
+)
+
+
+def rewrite_urls(t, page):
+    for old, new in URL_MAP:
+        if old in t:
+            t = t.replace(old, new)
+    leftover = re.findall(r'href="(?:index|about|work|contact)\.html"', t)
+    if leftover:
+        errors.append(f"{page}: leftover .html hrefs {leftover}")
+    return t
+
+
+def dest_for(name):
+    if name == "index":
+        return ROOT / "index.html"
+    path = ROOT / name / "index.html"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
+
+
 for name, fn in PAGES.items():
     src = (REF / f"{name}.html").read_text(encoding="utf-8")
     out = fn(common(src, name))
-    (ROOT / f"{name}.html").write_text(out, encoding="utf-8", newline="")
-    print(f"wrote {name}.html")
+    dest = dest_for(name)
+    dest.write_text(out, encoding="utf-8", newline="")
+    print(f"wrote {dest.relative_to(ROOT)}")
 
 if errors:
     print("MISSED REPLACEMENTS:", *errors, sep="\n  ")
