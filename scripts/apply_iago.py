@@ -173,9 +173,9 @@ def work(t):
 PAGES = {"index": index, "about": about, "contact": contact, "work": work}
 
 FAVICON_LINKS = (
-    '  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />\n'
-    '  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />\n'
-    '  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />'
+    '  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />\n'
+    '  <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png" />\n'
+    '  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />'
 )
 
 URL_MAP = (
