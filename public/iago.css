@@ -34,9 +34,8 @@
 }
 
 .single-about-image .overlay:nth-child(1) {
-   background-color: var(--iago-photo-bg);
-   background-image: url("assets/iago-entero.png");
-   background-position: center 12vh;
+   background-image: url("assets/iago-about.jpg");
+   background-position: center center;
 }
 
 /* aws-jam-2026.jpg is 840x768: frame matches it (plus parallax slack) so the whole team shows */
