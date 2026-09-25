@@ -67,7 +67,7 @@ gsap.set('#sidebarOverlay', { autoAlpha: 0 });
 const sidebarTl = gsap.timeline({ paused: true })
   .to('#sidebar', { xPercent: 0, duration: 0.65, ease: 'power4.inOut' })
   .to('#sidebarOverlay', { autoAlpha: 1, duration: 0.45, ease: 'power2.out' }, 0)
-  .to(menuBtn, { backgroundColor: '#3B82F6', duration: 0.25, ease: 'power2.inOut' }, 0)
+  .to(menuBtn, { backgroundColor: '#455ce9', duration: 0.25, ease: 'power2.inOut' }, 0)
   .to('.menu-btn__line:first-child', { y: 4, rotate: 45, duration: 0.25, ease: 'power2.inOut' }, 0)
   .to('.menu-btn__line:last-child', { y: -4, rotate: -45, duration: 0.25, ease: 'power2.inOut' }, 0)
   .fromTo('.sidebar__link',
@@ -126,17 +126,31 @@ document.querySelectorAll('.nav__logo').forEach((logo) => {
 
 /* ─── Footer — curve + clock + reveals + magnetic ────── */
 
-/* Black U retracts to flat line — finishes early so curve is gone before title is read */
+/* White U covers "Let's work together", then flattens as the footer rises */
 gsap.to('.footer-curve__path', {
   attr: { d: 'M 0 0 Q 50 0 100 0 L 100 0 L 0 0 Z' },
   ease: 'none',
   scrollTrigger: {
     trigger: '.site-footer',
     start: 'top bottom',
-    end: 'bottom 75%',
+    end: 'top 42%',
     scrub: true,
   },
 });
+
+gsap.fromTo('.footer__cta-right',
+  { y: 40 },
+  {
+    y: -150,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.site-footer',
+      start: 'top bottom',
+      end: 'bottom bottom',
+      scrub: true,
+    },
+  }
+);
 
 /* Real-time clock — Canary Islands timezone */
 function updateLocalTime() {
@@ -152,14 +166,12 @@ function updateLocalTime() {
 updateLocalTime();
 setInterval(updateLocalTime, 1_000);
 
-/* CTA block scroll reveals */
+/* Pills / meta fade in after the curve has started lifting */
 ScrollTrigger.create({
   trigger: '.site-footer',
-  start: 'top 85%',
+  start: 'top 70%',
   onEnter: () => {
-    gsap.from('.footer__headline', { opacity: 0, y: 50, duration: 1.1, ease: 'power3.out' });
-    gsap.from('.footer__contact-btn', { opacity: 0, scale: 0, duration: 0.7, ease: 'back.out(1.7)', delay: 0.25 });
-    gsap.from(['.footer__pills', '.footer__bottom'], { opacity: 0, y: 20, duration: 0.7, ease: 'power3.out', delay: 0.4 });
+    gsap.from(['.footer__pills', '.footer__bottom'], { opacity: 0, y: 20, duration: 0.7, ease: 'power3.out' });
   },
   once: true,
 });
@@ -226,12 +238,12 @@ if (document.querySelector('.hero')) {
   });
 
   /* ── Intro scroll reveal ── */
-  gsap.from(['.intro__text', '.intro__about-btn'], {
+  gsap.from(['.intro__text', '.intro__aside-text', '.intro__about-btn'], {
     opacity: 0,
     y: 40,
     duration: 1.1,
     ease: 'power3.out',
-    stagger: 0.15,
+    stagger: 0.12,
     scrollTrigger: { trigger: '.intro', start: 'top 78%' },
   });
 
@@ -260,79 +272,32 @@ if (document.querySelector('.hero')) {
     scrollTrigger: { trigger: '.view-all-wrap', start: 'top 90%' },
   });
 
-  /* ── Nav active-indicator dot ── */
-  const heroLinksEl = document.querySelector('.hero__links');
-  const navLinks = heroLinksEl.querySelectorAll('a');
-  const navDot = heroLinksEl.querySelector('.nav-dot');
-  let navDotVis = false;
-
-  gsap.set(navDot, { opacity: 0 });
-
-  navLinks.forEach((link) => {
-    link.addEventListener('mouseenter', () => {
-      const lR = link.getBoundingClientRect();
-      const nR = heroLinksEl.getBoundingClientRect();
-      const tx = lR.left - nR.left + lR.width / 2 - navDot.offsetWidth / 2;
-      if (navDotVis) {
-        gsap.to(navDot, { x: tx, opacity: 1, duration: 0.55, ease: 'expo.out' });
-      } else {
-        navDotVis = true;
-        gsap.set(navDot, { x: tx });
-        gsap.to(navDot, { opacity: 1, duration: 0.35, ease: 'power2.out' });
-      }
-    });
-  });
-
-  heroLinksEl.addEventListener('mouseleave', () => {
-    navDotVis = false;
-    gsap.to(navDot, { opacity: 0, duration: 0.3, ease: 'power2.out' });
-  });
-
-  /* ── Brand logo — hover animation + magnetic ── */
-  const brandEl = document.querySelector('.nav__logo'); // <-- ¡Actualizado!
-  const codeText = document.querySelector('.logo__text--code');
-  const surnameText = document.querySelector('.logo__text--surname');
-
-  // Solo ejecutamos esto si el logo existe en la página
-  if (brandEl) {
-    brandEl.addEventListener('mouseenter', () => {
-      // Si hiciste la animación con CSS, puedes borrar estos gsap.to
-      if (codeText && surnameText) {
-        gsap.to(codeText, { width: 0, opacity: 0, duration: 0.4, ease: 'power2.out', overwrite: true });
-        gsap.to(surnameText, { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out', overwrite: true });
-      }
-    });
-
-    brandEl.addEventListener('mouseleave', () => {
-      if (codeText && surnameText) {
-        gsap.to(codeText, { width: 'auto', opacity: 1, duration: 0.4, ease: 'power2.out', overwrite: true });
-        gsap.to(surnameText, { x: 20, opacity: 0, duration: 0.4, ease: 'power2.out', overwrite: true });
-      }
-    });
-  }
-
+  /* ── Brand logo magnetic (hover slider is wired globally) ── */
+  const brandEl = document.querySelector('.hero .nav__logo');
   let brandMagnetActive = false;
   const BRAND_R = 80;
   const BRAND_STR = 0.15;
 
-  document.addEventListener('mousemove', (e) => {
-    const rect = brandEl.getBoundingClientRect();
-    const gx = gsap.getProperty(brandEl, 'x') || 0;
-    const gy = gsap.getProperty(brandEl, 'y') || 0;
-    const cx = rect.left + rect.width / 2 - gx;
-    const cy = rect.top + rect.height / 2 - gy;
-    const dx = e.clientX - cx;
-    const dy = e.clientY - cy;
-    const dist = Math.hypot(dx, dy);
+  if (brandEl) {
+    document.addEventListener('mousemove', (e) => {
+      const rect = brandEl.getBoundingClientRect();
+      const gx = gsap.getProperty(brandEl, 'x') || 0;
+      const gy = gsap.getProperty(brandEl, 'y') || 0;
+      const cx = rect.left + rect.width / 2 - gx;
+      const cy = rect.top + rect.height / 2 - gy;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
 
-    if (dist < BRAND_R) {
-      brandMagnetActive = true;
-      gsap.to(brandEl, { x: dx * BRAND_STR, y: dy * BRAND_STR, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
-    } else if (brandMagnetActive) {
-      brandMagnetActive = false;
-      gsap.to(brandEl, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
-    }
-  });
+      if (dist < BRAND_R) {
+        brandMagnetActive = true;
+        gsap.to(brandEl, { x: dx * BRAND_STR, y: dy * BRAND_STR, duration: 0.5, ease: 'power2.out', overwrite: 'auto' });
+      } else if (brandMagnetActive) {
+        brandMagnetActive = false;
+        gsap.to(brandEl, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
+      }
+    });
+  }
 
   /* ── About me button — magnetic (same math, single element) ── */
   const aboutBtn = document.getElementById('aboutBtn');
@@ -358,6 +323,13 @@ if (document.querySelector('.hero')) {
         aboutMagnetActive = false;
         gsap.to(aboutBtn, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
       }
+    });
+
+    ScrollTrigger.create({
+      trigger: '.projects',
+      start: 'top 50%',
+      onEnter: () => aboutBtn.classList.add('is-dark'),
+      onLeaveBack: () => aboutBtn.classList.remove('is-dark'),
     });
   }
 

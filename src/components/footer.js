@@ -5,7 +5,8 @@ export function mountFooter() {
   footer.innerHTML = `
     <div class="footer-curve" aria-hidden="true">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-        <path class="footer-curve__path" fill="#0a0a0a"
+        <path class="footer-curve__path" fill="#ffffff"
+              style="fill: #ffffff !important;"
               d="M 0 0 Q 50 100 100 0 L 100 0 L 0 0 Z"/>
       </svg>
     </div>
