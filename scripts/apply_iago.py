@@ -16,6 +16,13 @@ DESC = ("A passionate Software Developer dedicated to building robust and scalab
         "applications. Specializing in backend development with a focus on cloud "
         "technologies. Fluent in English, Spanish, and German.")
 META_DESC = DESC + " Located in Spain. © Code by Iago"
+OG_IMAGE = "https://iagoestevez.com/assets/og.jpg"
+OG_URLS = {
+    "index": "https://iagoestevez.com/",
+    "about": "https://iagoestevez.com/about",
+    "work": "https://iagoestevez.com/work",
+    "contact": "https://iagoestevez.com/contact",
+}
 
 errors = []
 
@@ -37,6 +44,14 @@ def common(t, page):
             f"{page}: config scripts", regex=True)
 
     t = rewrite_urls(t, page)
+
+    if page != "index":
+        t = sub(t, '<meta property="og:site_name" content="Portfolio" />',
+                '<meta property="og:site_name" content="Iago Estévez" />', f"{page}: og site name")
+        t = sub(t, '<meta property="og:image" content="" />',
+                f'<meta property="og:image" content="{OG_IMAGE}" />', f"{page}: og image")
+        t = sub(t, '<meta property="twitter:image" content="" />',
+                f'<meta property="twitter:image" content="{OG_IMAGE}" />', f"{page}: twitter image")
 
     # Socials: Awwwards -> GitHub, drop Instagram + Twitter, LinkedIn -> Iago
     t = sub(t, r'\s*<li class="btn btn-link btn-link-external">\s*<a href="https://www\.instagram\.com/codebydennis/"[\s\S]*?</li>',
@@ -71,11 +86,12 @@ def index(t):
             'content="Iago Estévez • Software Developer"', "index: og/twitter title")
     t = sub(t, r'content="Helping brands thrive in the digital world\. Located in The Netherlands\.[^"]*"',
             f'content="{META_DESC}"', "index: meta description", regex=True)
-    t = sub(t, r'\s*<meta property="(?:og|twitter):image"\s*content="https://dennissnellenberg\.com/media/site/[^"]*" />',
-            '', "index: meta image", regex=True)
+    t = sub(t, r'content="https://dennissnellenberg\.com/media/site/[^"]*"',
+            f'content="{OG_IMAGE}"', "index: meta image", regex=True)
     t = sub(t, '<meta property="og:site_name" content="Dennis Snellenberg" />',
             '<meta property="og:site_name" content="Iago Estévez" />', "index: site name")
-    t = sub(t, r'\s*<link rel="canonical" href="https://dennissnellenberg\.com" />', '', "index: canonical", regex=True)
+    t = sub(t, r'<link rel="canonical" href="https://dennissnellenberg\.com" />',
+            f'<link rel="canonical" href="{OG_URLS["index"]}" />', "index: canonical", regex=True)
 
     t = sub(t, '<img src="https://dennissnellenberg.com/assets/img/DSC07033.jpg" />',
             '<img src="/assets/iago-entero.png" alt="Iago Estévez" />', "index: hero photo")
