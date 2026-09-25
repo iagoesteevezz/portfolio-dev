@@ -143,3 +143,6 @@ vite.config.ts.timestamp-*
 .vite/
 
 _ref_dennis/
+.tmp-dennis-frames/
+.tmp-iago-frames/
+.tmp-ref/
