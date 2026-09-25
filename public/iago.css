@@ -82,6 +82,141 @@
    vertical-align: -.05em;
 }
 
+/* Language selector inside the "Located in Spain" hanger: on hover the location
+   lines roll up and ES / EN rolls in; the globe toggles the language on click. */
+/* The "Software Developer" container spans the full width over the hanger and has no links */
+.home-header > .container.once-in-secondary {
+   pointer-events: none;
+}
+
+.home-header .hanger p span {
+   transition: transform .6s cubic-bezier(0.7, 0, 0.3, 1), opacity .4s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.home-header .hanger p span:nth-child(2) { transition-delay: .03s; }
+.home-header .hanger p span:nth-child(3) { transition-delay: .06s; }
+
+.home-header .hanger .lang-switch {
+   position: absolute;
+   top: 50%;
+   left: 0;
+   transform: translateY(-50%);
+   padding-left: var(--gap-padding);
+   color: var(--color-white);
+   line-height: 1.2;
+   pointer-events: none;
+}
+
+.home-header .hanger .lang-caption,
+.home-header .hanger .lang-options {
+   display: block;
+   opacity: 0;
+   transform: translateY(1em);
+   transition: transform .7s cubic-bezier(0.19, 1, 0.22, 1), opacity .5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.home-header .hanger .lang-caption {
+   font-size: .6em;
+   text-transform: uppercase;
+   letter-spacing: .08em;
+   opacity: 0;
+   margin-bottom: .55em;
+}
+
+.home-header .hanger .lang-options {
+   position: relative;
+   display: flex;
+   gap: .85em;
+   font-size: 1.15em;
+}
+
+.home-header .hanger .lang-option {
+   padding: 0;
+   border: 0;
+   background: none;
+   color: inherit;
+   font: inherit;
+   letter-spacing: .02em;
+   cursor: pointer;
+   opacity: .4;
+   transition: opacity .3s ease;
+}
+
+.home-header .hanger .lang-option:hover,
+.home-header .hanger .lang-option:focus-visible { opacity: .8; outline: none; }
+.home-header .hanger .lang-option.is-active { opacity: 1; }
+
+.home-header .hanger .lang-dot {
+   position: absolute;
+   left: 0;
+   bottom: -.55em;
+   width: .28em;
+   height: .28em;
+   margin-left: -.14em;
+   border-radius: 50%;
+   background: var(--color-white);
+   transition: transform .55s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+@media (hover: hover) {
+   .home-header .hanger:hover p span { transform: translateY(-1.2em); opacity: 0; }
+   .home-header .hanger:hover .lang-switch { pointer-events: auto; }
+   .home-header .hanger:hover .lang-caption { transform: none; opacity: .5; transition-delay: .12s; }
+   .home-header .hanger:hover .lang-options { transform: none; opacity: 1; transition-delay: .18s; }
+}
+
+.home-header .hanger:focus-within p span,
+.home-header .hanger.is-open p span { transform: translateY(-1.2em); opacity: 0; }
+.home-header .hanger:focus-within .lang-switch,
+.home-header .hanger.is-open .lang-switch { pointer-events: auto; }
+.home-header .hanger:focus-within .lang-caption,
+.home-header .hanger.is-open .lang-caption { transform: none; opacity: .5; transition-delay: .12s; }
+.home-header .hanger:focus-within .lang-options,
+.home-header .hanger.is-open .lang-options { transform: none; opacity: 1; transition-delay: .18s; }
+
+.home-header .hanger .digital-ball { cursor: pointer; }
+
+.home-header .hanger .digital-ball .globe {
+   transition: transform .5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.home-header .hanger .digital-ball:hover .globe,
+.home-header .hanger .digital-ball:focus-visible .globe {
+   transform: translate(-50%, -50%) scale(1.12);
+}
+
+.home-header .hanger .digital-ball:focus-visible { outline: none; }
+
+.home-header .hanger .digital-ball .globe.is-spinning {
+   animation: iagoGlobeSpin .9s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+@keyframes iagoGlobeSpin {
+   0%   { transform: translate(-50%, -50%) rotate(0deg) scale(1.12); }
+   50%  { transform: translate(-50%, -50%) rotate(200deg) scale(.82); }
+   100% { transform: translate(-50%, -50%) rotate(360deg) scale(1.12); }
+}
+
+/* Mobile: the pill collapses to the globe, so ES / EN sits in a small chip beside it */
+@media screen and (max-width: 720px) {
+   .home-header .hanger .lang-switch {
+      top: 50%;
+      left: auto;
+      right: 100%;
+      padding: .65em .9em .95em;
+      background: none;
+      pointer-events: auto;
+   }
+
+   .home-header .hanger .lang-caption { display: none; }
+
+   .home-header .hanger .lang-options {
+      opacity: 1;
+      transform: none;
+      font-size: .95em;
+   }
+}
+
 /* The badge reads "Awwwards Jury": not a credential Iago holds */
 .about-awwwards .awwwards-badge {
    display: none;
