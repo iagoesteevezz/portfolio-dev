@@ -63,6 +63,11 @@
    }
 }
 
+/* Carousel clips fill the 4:3 tile the same way the stills do */
+.horizontal-single-item video.overlay {
+   object-fit: cover;
+}
+
 /* Logo hover offsets are tuned to the width of "Iago" / "Estévez" */
 .btn-link.btn-left-top .snellenberg {
    transform: translateX(2.05em);
