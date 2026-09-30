@@ -331,6 +331,7 @@
       function commit() {
          edits.forEach(function (e) { e.apply(); });
          applyTitle();
+         syncResume();
          syncSwitches();
       }
       if (!visible.length || !visible[0].animate) { commit(); return; }
@@ -359,6 +360,7 @@
       lang = next;
       try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
       document.documentElement.lang = lang;
+      syncResume();
       syncSwitches();
       translatePage(animate);
    }
@@ -386,6 +388,16 @@
          }
       });
       syncSwitches();
+   }
+
+   function syncResume() {
+      var es = lang === 'es';
+      var href = es ? '/assets/cv-iago-estevez.pdf' : '/assets/cv-iago-estevez-en.pdf';
+      var file = es ? 'Iago-Estevez-CV-ES.pdf' : 'Iago-Estevez-CV-EN.pdf';
+      document.querySelectorAll('a[href*="cv-iago-estevez"]').forEach(function (a) {
+         a.setAttribute('href', href);
+         a.setAttribute('download', file);
+      });
    }
 
    function syncSwitches() {
@@ -450,6 +462,7 @@
             m.addedNodes.forEach(function (n) { edits = edits.concat(collect(n)); });
          });
          edits.forEach(function (e) { e.apply(); });
+         syncResume();
          enhanceHangers();
       }).observe(document.body, { childList: true, subtree: true });
 

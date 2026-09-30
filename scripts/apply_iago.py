@@ -165,7 +165,7 @@ WEB3FORMS_KEY = "38744957-bd94-44fc-9acc-dd6ad2a28779"
 
 RESUME_LI = '''
                         <li class="btn btn-link btn-link-external">
-                            <a href="/assets/cv-iago-estevez.pdf" download="Iago-Estevez-CV.pdf" data-barba-prevent
+                            <a href="/assets/cv-iago-estevez-en.pdf" download="Iago-Estevez-CV-EN.pdf" data-barba-prevent
                                 class="btn-click magnetic" data-strength="20" data-strength-text="10">
                                 <span class="btn-text">
                                     <span class="btn-text-inner">Resume<svg class="icon-download" viewBox="0 0 16 16"
