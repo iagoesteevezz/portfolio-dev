@@ -3,8 +3,8 @@
 
 .profile-picture {
    background-image: url("assets/iago-entero.png");
-   background-size: 180%;
-   background-position: 48% 4%;
+   background-size: 142%;
+   background-position: 50% 2%;
 }
 
 /* Matches the flat backdrop of iago-entero.png so the photo edges disappear */
@@ -219,6 +219,68 @@
       transform: none;
       font-size: .95em;
    }
+}
+
+/* The panel is only as wide as its longest link. Spanish labels ("Proyectos")
+   are longer than the English ones, so reserve that width in both languages. */
+@media screen and (min-width: 541px) {
+   .fixed-nav .nav-row ul::after {
+      content: "Proyectos";
+      display: block;
+      width: max-content;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      pointer-events: none;
+      white-space: nowrap;
+      box-sizing: content-box;
+      padding: 0 20px;
+      font-size: calc(clamp(3.25em, 5vw, 4em) * .875);
+      line-height: 0;
+   }
+}
+
+/* Language sits above Socials in the hamburger, same label scale, not inside the links */
+.fixed-nav .social-row {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+}
+
+.fixed-nav .nav-lang {
+   margin-bottom: 2.6em;
+}
+
+.fixed-nav .nav-lang h5 {
+   margin-bottom: 1em;
+}
+
+.fixed-nav .lang-options {
+   display: flex;
+   gap: 1.15em;
+   font-size: 1.05em;
+}
+
+.fixed-nav .lang-option {
+   padding: 0;
+   border: 0;
+   background: none;
+   color: var(--color-white);
+   font: inherit;
+   letter-spacing: .04em;
+   cursor: pointer;
+   opacity: .4;
+   transition: opacity .3s ease;
+}
+
+.fixed-nav .lang-option:hover,
+.fixed-nav .lang-option:focus-visible {
+   opacity: .8;
+   outline: none;
+}
+
+.fixed-nav .lang-option.is-active {
+   opacity: 1;
 }
 
 /* The badge reads "Awwwards Jury": not a credential Iago holds */
